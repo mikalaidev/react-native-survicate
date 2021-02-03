@@ -6,8 +6,8 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikalaidev/react-native-survicate.git",
-    "baseUrl": "https://github.com/mikalaidev/react-native-survicate"
+    "url": "git+https://github.com/Survicate/react-native-survicate.git",
+    "baseUrl": "https://github.com/Survicate/react-native-survicate"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
