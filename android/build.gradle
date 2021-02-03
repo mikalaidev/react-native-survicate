@@ -34,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.survicate:survicate-sdk:1.4.2'
+    compile 'com.survicate:survicate-sdk:1.4.2'
     compile 'com.facebook.react:react-native:+'
 }
   
