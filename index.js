@@ -1,6 +1,5 @@
-
 import { NativeModules } from 'react-native';
 
-const { RNReactNativeSurvicate } = NativeModules;
+const { SurvicateBindings } = NativeModules;
 
-export default RNReactNativeSurvicate;
+export default SurvicateBindings;
