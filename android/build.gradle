@@ -27,10 +27,14 @@ android {
 }
 
 repositories {
+    maven {
+        url "https://repo.survicate.com"
+    }
     mavenCentral()
 }
 
 dependencies {
+    implementation 'com.survicate:survicate-sdk:1.4.2'
     compile 'com.facebook.react:react-native:+'
 }
   
