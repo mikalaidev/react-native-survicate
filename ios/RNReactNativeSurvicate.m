@@ -1,4 +1,5 @@
 
+@import Survicate;
 #import "RNReactNativeSurvicate.h"
 
 @implementation RNReactNativeSurvicate
