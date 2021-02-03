@@ -15,7 +15,10 @@
   "keywords": [
     "react-native"
   ],
-  "author": "",
+  "author": {
+    "name": "name",
+    "email": "help@gmail.com"
+  },
   "license": "",
   "peerDependencies": {
     "react-native": "^0.41.2"
