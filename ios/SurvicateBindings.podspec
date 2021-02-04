@@ -1,8 +1,8 @@
 
 Pod::Spec.new do |s|
-  s.name         = "RNReactNativeSurvicate"
+  s.name         = "SurvicateBindings"
   s.version      = "1.0.0"
-  s.summary      = "RNReactNativeSurvicate"
+  s.summary      = "SurvicateBindings"
   s.description  = <<-DESC
                   React native module bridge between JS code and Survicate service
                    DESC
