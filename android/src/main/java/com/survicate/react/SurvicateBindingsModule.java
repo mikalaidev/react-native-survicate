@@ -68,7 +68,7 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void startSurveyDisplayedListener() {
+    public void startSurveyListeners() {
         Survicate.setEventListener(new SurvicateEventListener() {
             @Override
             public void onSurveyDisplayed(String surveyId) {
