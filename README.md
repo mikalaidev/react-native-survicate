@@ -1,4 +1,4 @@
-# @survicate/react-native-survicate [![npm version](https://badge.fury.io/js/%40survicate%2Freact-native-survicate.svg)](https://badge.fury.io/js/%40survicate%2Freact-native-survicate)
+# react-native-survicate
 
 ## Requirements:
 - iOS at least on version 10.0
