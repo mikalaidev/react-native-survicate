@@ -85,7 +85,7 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public void onQuestionAnswered(@NonNull String surveyId, long questionId, @NonNull SurvicateAnswer answer) {
+            public void onQuestionAnswered(@NonNull String surveyId, long questionId, SurvicateAnswer answer) {
                 WritableMap params = Arguments.createMap();
                 params.putString("surveyId", surveyId);
                 params.putString("questionId", questionId);
