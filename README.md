@@ -5,13 +5,6 @@
 - Android at least on version 4.4
 - React Native at least on version 0.59.10
 
-## Getting started
-
-`$ npm install @survicate/react-native-survicate --save`
-
-### Mostly automatic installation
-
-`$ react-native link @survicate/react-native-survicate`
 
 ### Configuring Survicate Bindings for iOS
 - Add your Survicate workspace key to `Info.plist`
