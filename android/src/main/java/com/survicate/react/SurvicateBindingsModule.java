@@ -5,6 +5,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.survicate.surveys.Survicate;
+import com.survicate.surveys.SurvicateEventListener;
 import com.survicate.surveys.traits.UserTrait;
 
 public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
@@ -57,10 +58,10 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void onSurveyDisplayed(Callback callback) {
+    public void onSurveyDisplayed(final Callback callback) {
         Survicate.setEventListener(new SurvicateEventListener() {
             @Override
-            public void onSurveyDisplayed(@NonNull String surveyId) {
+            public void onSurveyDisplayed(String surveyId) {
                 callback.invoke(surveyId);
             }
         });
