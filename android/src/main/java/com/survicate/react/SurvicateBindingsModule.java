@@ -9,6 +9,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.survicate.surveys.Survicate;
+import com.survicate.surveys.SurvicateAnswer;
 import com.survicate.surveys.SurvicateEventListener;
 import com.survicate.surveys.traits.UserTrait;
 
@@ -85,11 +86,11 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public void onQuestionAnswered(@NonNull String surveyId, long questionId, SurvicateAnswer answer) {
+            public void onQuestionAnswered(String surveyId, long questionId, SurvicateAnswer answer) {
                 WritableMap params = Arguments.createMap();
                 params.putString("surveyId", surveyId);
-                params.putString("questionId", questionId);
-                params.putString("answer", answer);
+                params.putString("questionId", Long.toString(questionId));
+                params.putString("answer", answer.getValue());
                 sendEvent(reactContext, "onQuestionAnswered", params);
             }
         });
