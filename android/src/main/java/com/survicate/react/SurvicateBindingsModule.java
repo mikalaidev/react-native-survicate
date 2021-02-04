@@ -55,4 +55,14 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
     public void reset() {
         Survicate.reset();
     }
+
+    @ReactMethod
+    public void onSurveyDisplayed(Callback callback) {
+        Survicate.setEventListener(new SurvicateEventListener() {
+            @Override
+            public void onSurveyDisplayed(@NonNull String surveyId) {
+                callback.invoke(surveyId);
+            }
+        });
+    }
 }
