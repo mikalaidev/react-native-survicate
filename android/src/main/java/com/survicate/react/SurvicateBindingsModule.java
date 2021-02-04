@@ -12,6 +12,12 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
 
+    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
+        reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit(eventName, params);
+    }
+
     public SurvicateBindingsModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
@@ -58,11 +64,13 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void onSurveyDisplayed(final Callback callback) {
+    public void startListenSurveyDisplayed() {
         Survicate.setEventListener(new SurvicateEventListener() {
             @Override
             public void onSurveyDisplayed(String surveyId) {
-                callback.invoke(surveyId);
+                WritableMap params = Arguments.createMap();
+                params.putString("surveyId", surveyId);
+                sendEvent(reactContext, "onSurveyDisplayed", params);
             }
         });
     }
