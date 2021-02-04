@@ -1,9 +1,13 @@
 package com.survicate.react;
 
+import android.support.annotation.Nullable;
+
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.survicate.surveys.Survicate;
 import com.survicate.surveys.SurvicateEventListener;
 import com.survicate.surveys.traits.UserTrait;
@@ -12,7 +16,7 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
 
-    private void sendEvent(ReactContext reactContext, String eventName, @Nullable WritableMap params) {
+    private void sendEvent(ReactApplicationContext reactContext, String eventName, @Nullable WritableMap params) {
         reactContext
             .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
             .emit(eventName, params);
