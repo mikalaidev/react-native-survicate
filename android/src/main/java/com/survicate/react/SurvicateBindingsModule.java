@@ -76,12 +76,7 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
                 params.putString("surveyId", surveyId);
                 sendEvent(reactContext, "onSurveyDisplayed", params);
             }
-        });
-    }
 
-    @ReactMethod
-    public void startSurveyClosedListener() {
-        Survicate.setEventListener(new SurvicateEventListener() {
             @Override
             public void onSurveyClosed(String surveyId) {
                 WritableMap params = Arguments.createMap();
