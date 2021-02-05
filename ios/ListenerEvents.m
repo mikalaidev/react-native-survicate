@@ -1,7 +1,7 @@
 #import "ListenerEvents.h"
 @import SurvicateAnswer;
 
-@implementation AppDelegate
+@implementation ListenerEvents
 
 - (void)questionAnsweredWithSurveyId:(NSString * _Nonnull)surveyId questionId:(NSInteger)questionId answer:(SurvicateAnswer * _Nonnull)answer {
 
