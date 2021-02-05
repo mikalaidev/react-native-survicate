@@ -1,15 +1,31 @@
 package com.survicate.react;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.WritableArray;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.survicate.surveys.Survicate;
+import com.survicate.surveys.SurvicateAnswer;
+import com.survicate.surveys.SurvicateEventListener;
 import com.survicate.surveys.traits.UserTrait;
+
+import java.util.Set;
 
 public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
+
+    private void sendEvent(ReactApplicationContext reactContext, String eventName, @Nullable WritableMap params) {
+        reactContext
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit(eventName, params);
+    }
 
     public SurvicateBindingsModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -54,5 +70,55 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void reset() {
         Survicate.reset();
+    }
+
+    @ReactMethod
+    public void startSurveyListeners() {
+        Survicate.setEventListener(new SurvicateEventListener() {
+            @Override
+            public void onSurveyDisplayed(String surveyId) {
+                WritableMap params = Arguments.createMap();
+                params.putString("surveyId", surveyId);
+                sendEvent(reactContext, "onSurveyDisplayed", params);
+            }
+
+            @Override
+            public void onSurveyClosed(String surveyId) {
+                WritableMap params = Arguments.createMap();
+                params.putString("surveyId", surveyId);
+                sendEvent(reactContext, "onSurveyClosed", params);
+            }
+
+            @Override
+            public void onSurveyCompleted(@NonNull String surveyId) {
+                WritableMap params = Arguments.createMap();
+                params.putString("surveyId", surveyId);
+                sendEvent(reactContext, "onSurveyCompleted", params);
+            }
+
+            @Override
+            public void onQuestionAnswered(@NonNull String surveyId, long questionId, @NonNull SurvicateAnswer answer) {
+                WritableMap params = Arguments.createMap();
+                WritableMap answerMap = Arguments.createMap();
+                params.putString("surveyId", surveyId);
+                params.putString("questionId", Long.toString(questionId));
+                answerMap.putString("value", answer.getValue());
+                Long answerId = answer.getId();
+                if (answerId != null) {
+                    answerMap.putString("id", Long.toString(answer.getId()));
+                }
+                Set<Long> answerIds = answer.getIds();
+                WritableArray idsArray=Arguments.createArray();
+                if (answerIds != null) {
+                    for(Long id : answerIds){
+                        idsArray.pushString(Long.toString(id));
+                    }
+                }
+                answerMap.putArray("ids", idsArray);
+                answerMap.putString("type", answer.getType());
+                params.putMap("answer", answerMap);
+                sendEvent(reactContext, "onQuestionAnswered", params);
+            }
+        });
     }
 }
