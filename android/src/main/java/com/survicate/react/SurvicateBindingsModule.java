@@ -1,17 +1,21 @@
 package com.survicate.react;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.survicate.surveys.Survicate;
 import com.survicate.surveys.SurvicateAnswer;
 import com.survicate.surveys.SurvicateEventListener;
 import com.survicate.surveys.traits.UserTrait;
+
+import java.util.Set;
 
 public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
 
@@ -86,11 +90,20 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
             }
 
             @Override
-            public void onQuestionAnswered(String surveyId, long questionId, SurvicateAnswer answer) {
+            public void onQuestionAnswered(@NonNull String surveyId, long questionId, @NonNull SurvicateAnswer answer) {
                 WritableMap params = Arguments.createMap();
+                WritableMap answerMap = Arguments.createMap();
                 params.putString("surveyId", surveyId);
                 params.putString("questionId", Long.toString(questionId));
-                params.putString("answer", answer.getValue());
+                answerMap.putString("value", answer.getValue());
+                answerMap.putDouble("id", answer.getId());
+                Set<Long> answerIds = answer.getIds();
+                WritableArray idsArray=Arguments.createArray();
+                for(Long answerId : answerIds){
+                    idsArray.pushString(Long.toString(answerId));
+                }
+                answerMap.putArray("ids", idsArray);
+                params.putMap("answer", answerMap);
                 sendEvent(reactContext, "onQuestionAnswered", params);
             }
         });
