@@ -1,7 +1,7 @@
 package com.survicate.react;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -96,13 +96,19 @@ public class SurvicateBindingsModule extends ReactContextBaseJavaModule {
                 params.putString("surveyId", surveyId);
                 params.putString("questionId", Long.toString(questionId));
                 answerMap.putString("value", answer.getValue());
-                answerMap.putDouble("id", answer.getId());
+                Long answerId = answer.getId();
+                if (answerId != null) {
+                    answerMap.putString("id", Long.toString(answer.getId()));
+                }
                 Set<Long> answerIds = answer.getIds();
                 WritableArray idsArray=Arguments.createArray();
-                for(Long answerId : answerIds){
-                    idsArray.pushString(Long.toString(answerId));
+                if (answerIds != null) {
+                    for(Long id : answerIds){
+                        idsArray.pushString(Long.toString(id));
+                    }
                 }
                 answerMap.putArray("ids", idsArray);
+                answerMap.putString("type", answer.getType());
                 params.putMap("answer", answerMap);
                 sendEvent(reactContext, "onQuestionAnswered", params);
             }
