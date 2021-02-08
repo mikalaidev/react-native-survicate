@@ -7,6 +7,11 @@
 
 @implementation SurvicateEventsDelegate
 
+- (id)init{
+    self = [super init];
+    return self;
+}
+
 - (void)questionAnsweredWithSurveyId:(NSString * _Nonnull)surveyId questionId:(NSInteger)questionId answer:(SurvicateAnswer * _Nonnull)answer {
     NSLog(@"questionAnsweredWithSurveyId");
 }
@@ -22,3 +27,5 @@
 - (void)surveyDisplayedWithSurveyId:(NSString * _Nonnull)surveyId {
     NSLog(@"surveyDisplayedWithSurveyId");
 }
+
+@end

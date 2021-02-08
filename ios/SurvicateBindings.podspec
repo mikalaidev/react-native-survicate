@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
 
   s.dependency "React"
-  s.dependency 'Survicate', '1.4.2'
+  s.dependency 'Survicate', '1.4.0'
   #s.dependency "others"
 
 end

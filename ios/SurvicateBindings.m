@@ -1,4 +1,5 @@
 #import "SurvicateBindings.h"
+#import "SurvicateEventsDelegate.h"
 @import Survicate;
 
 @implementation SurvicateBindings
@@ -38,6 +39,12 @@ RCT_EXPORT_METHOD(setUserTrait:(NSString *)traitName value:(NSString *)value)
 RCT_EXPORT_METHOD(initialize)
 {
     [[Survicate shared] initialize];
+}
+
+RCT_EXPORT_METHOD(listen)
+{
+    SurvicateEventsDelegate *inst = [[SurvicateEventsDelegate alloc] init];
+    [[Survicate shared] setDelegate:  inst];
 }
 
 RCT_EXPORT_METHOD(reset)
