@@ -34,7 +34,7 @@ class FlutterSurvicateDelegate : RCTEventEmitter, SurvicateDelegate {
     
     @objc
     public func surveyDisplayed(surveyId: String) {
-        // self.send()
+        self.send()
         NSLog("surveyDisplayed")
     }
 
