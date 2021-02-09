@@ -9,44 +9,65 @@ import Foundation
 import Survicate
 
 @objc(SurvicateBindings)
-class SurvicateBindings: NSObject {
-  private var survicateDelegate: FlutterSurvicateDelegate?
-  @objc(sampleMethod)
-  func sampleMethod() -> Void {
-    Survicate.shared.reset()
+class SurvicateBindings: RCTEventEmitter {
+  private var rnSurvicateDelegate: RNSurvicateDelegate?
+  @objc(enterScreen)
+  func enterScreen(screenName: String) {
+    Survicate.shared.enterScreen(value: screenName)
+  }
+  @objc(leaveScreen)
+  func leaveScreen(screenName: String) {
+    Survicate.shared.leaveScreen(value: screenName)
+  }
+  @objc(invokeEvent)
+  func invokeEvent(eventName: String) {
+    Survicate.shared.invokeEvent(name: eventName)
+  }
+  @objc(setUserId)
+  func setUserId(userId: String) {
+    Survicate.shared.setUserTrait(UserTrait.userId(value: userId))
+  }
+  @objc(setUserTrait)
+  func setUserTrait(userTrait: String, value: String) {
+    Survicate.shared.setUserTrait(UserTrait(withName: userTrait, value: value))
+  }
+  @objc(setUserTrait)
+  func setUserTrait(userTrait: String, value: String) {
+    Survicate.shared.setUserTrait(UserTrait(withName: userTrait, value: value))
+  }
+  @objc(initialize)
+  func initialize() {
     Survicate.shared.initialize()
-    self.survicateDelegate = FlutterSurvicateDelegate()
-    Survicate.shared.delegate = self.survicateDelegate
-    Survicate.shared.invokeEvent(name: "event")
+  }
+  @objc(reset)
+  func reset() {
     Survicate.shared.reset()
+  }
+  @objc(startSurveyListeners)
+  func startSurveyListeners() {
+    self.rnSurvicateDelegate = RNSurvicateDelegate()
+    Survicate.shared.delegate = self.survicateDelegate
   }
 }
 
-class FlutterSurvicateDelegate : RCTEventEmitter, SurvicateDelegate {
-    
-    override func supportedEvents() -> [String]! {
-            return ["onIncrement"]
-        }
-
-    private func send() {
-        sendEvent(withName: "onIncrement", body: ["count": 1])
+class RNSurvicateDelegate : SurvicateDelegate {
+    private var emitter: RCTEventEmitter!
+    init(emitter: RCTEventEmitter) {
+        self.emitter = emitter
     }
-    
-    @objc
     public func surveyDisplayed(surveyId: String) {
-        self.send()
-        NSLog("surveyDisplayed")
+        emitter.sendEvent(withName: "surveyDisplayed", body: "test")
     }
 
     public func questionAnswered(surveyId: String, questionId: Int, answer: SurvicateAnswer) {
-        NSLog("questionAnswered")
+        emitter.sendEvent(withName: "questionAnswered", body: "test")
     }
 
     public func surveyCompleted(surveyId: String) {
-        NSLog("surveyCompleted")
+        emitter.sendEvent(withName: "surveyCompleted", body: "test")
     }
 
     public func surveyClosed(surveyId: String) {
-       NSLog("surveyCompleted")
+        emitter.sendEvent(withName: "surveyClosed", body: "test")
     }
 }
